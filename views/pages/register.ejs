@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <%- include('../partials/header2'); %> 
+        <style>
+          body {
+            background-color: #21E6C1;
+          }
+          .h1{
+            text-align: center;
+          }
+          .col-sm-8{
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .form-group{
+            margin-top: 4px;
+          }
+          .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1 solid transparent;
+            border-radius: .35rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+        }
+        </style>
+    </head>
+    
+<body>
+    <div class="container mt-5">
+       
+      
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="card">
+             
+              <div class="card-body">
+                <h1>Register</h1>
+                <!-- Makes POST request to /register route -->
+                <form action="/register" method="POST">
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" class="form-control" required="required" name="email">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="email">Confirm Email</label>
+                        <input type="email" class="form-control" required="required" name="confirm_email">
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                  
+                 <div>
+                    <p><strong>Note:- Your email will be your username to Login on behalf of your Shop</strong> </p>
+                 </div>
+
+                 <div class="form-group">
+                    <label for="email">Your Full Name</label>
+                    <input type="text" class="form-control" name="fullname">
+                 </div>
+
+                
+                  <div class="form-group">
+                    <label for="contact">Your Contact Number</label>
+                    <input type="number" required="required" class="form-control" name="contactNo">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="shopname">Your Shop Name</label>
+                    <input type="text" class="form-control" name="shopname">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="shopaddress">Your Shop Address</label>
+                    <input type="text" class="form-control" name="shopaddress">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="shopnumber">Your Shop Licence Number</label>
+                    <input type="number" class="form-control" name="shopLicenceNumber">
+                  </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="password">Create Password</label>
+                      <input type="password" required="required" class="form-control" name="password">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="password">Confirm Password</label>
+                      <input type="Text" required="required" class="form-control" name="passwordC">
+                    </div>
+                  </div>
+                </div>
+                  
+
+                 <div class="text-center">
+                     <button type="submit" class="btn btn-lg btn-dark text-center" style="margin-top: 10px;" onclick="validate()">Register</button>
+                 </div>
+                   
+                </form>
+      
+              </div>
+            </div>
+          </div>
+      
+      
+        </div>
+      </div>
+
+     
+        <div class="container">
+          <div class="text-center text-dark" style="margin-top: 0px;">
+            Made in India with ❤️:  <strong>Harvendra Singh Rathore</strong>
+           </div>
+        </div>
+
+       <script>
+            function validate(){
+                // To validate form If any reqyuirements....
+            }
+       </script>    
+</body>
+
+</html>

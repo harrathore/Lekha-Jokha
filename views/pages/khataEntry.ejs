@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <%- include('../partials/header2'); %> 
+        <style>
+          body {
+            background-color: #b6ffae;
+          }
+          .h1{
+            text-align: center;
+          }
+          .col-sm-8{
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .form-group{
+            margin-top: 4px;
+          }
+          .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1 solid transparent;
+            border-radius: .35rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+        }
+        h5{
+          font-family: Ubuntu;
+          font-weight: bold;
+          color :rgba(255, 0, 0, 0.54)
+        }
+        h6, h4{
+          font-weight: bold;
+        }
+        </style>
+    </head>
+    
+<body>
+   
+     <div class="container mt-5">
+      <div class="card">       
+        <div class="card-body">
+          <h3 class="mb-4 text-center"><%=shopname%></h3>
+        <form action="/khataEntry" method="post">
+
+        <div class="row">
+          <div class="col col-lg-6 col-12">
+            <div class="form-group">
+              <label for="customer_name">Customer Aadhar Number</label>
+              <input type="number" class="form-control" required="required" name="customerAadhar">
+            </div>
+          </div>
+
+          <div class="col col-lg-6 col-12">
+            <div class="form-group">
+              <label for="customer_name">Customer Contact Number</label>
+              <input type="number" class="form-control" required="required" name="customerContact">
+            </div>
+          </div>
+       </div>
+
+        <div class="row">
+          <div class="col col-lg-6 col-12">
+            <div class="form-group">
+              <label for="customer_name">Customer Name</label>
+              <input type="text" class="form-control" required="required" name="customerName">
+            </div>
+          </div>
+
+          <div class="col col-lg-6 col-12">
+            <div class="form-group">
+              <label for="customer_name">Customer Father's Name</label>
+              <input type="text" class="form-control" required="required" name="customerFathersName">
+            </div>
+          </div>
+       </div>
+
+
+       <div class="row">
+        <div class="col col-lg-4 col-md-4 col-12">
+          <div class="form-group">
+            <label for="customer_name">Debit Amount</label>
+            <input type="number" class="form-control" required="required" name="debitAmount">
+          </div>
+        </div>
+
+        <div class="col col-lg-4 col-md-4 col-12">
+          <div class="form-group">
+            <label for="customer_name">Credit Amount</label>
+            <input type="number" class="form-control" required="required" name="creditAmount">
+          </div>
+        </div>
+
+        <div class="col col-lg-4 col-md-4 col-12">
+          <div class="form-group">
+            <label for="customer_name">Date of transaction</label>
+            <input type="date" class="form-control" required="required" name="Date">
+          </div>
+        </div>
+     </div>
+      
+  
+
+
+      <div class="row mt-3">
+        <div class="col text-center">
+           <button class="btn btn-dark" type="submit">Add Khata</button>
+       </div>
+      </div>
+  
+
+    </form>
+
+      </div>
+      </div>
+   </div>
+
+
+   <div class="container">
+     <h2 class="text-center mb-4">This is all Your customers Khatas</h2>
+      <% let len = allKhatas.length; %>
+      <% console.log(len); %>
+      <% for(let i=0; i<len; i++){ %>
+          <% if(i%4 === 0){ %>
+            <div class="row text-center">
+          <% } %>
+          <div class="col col-lg-3 col-12">
+            <div class="card">
+               <div class="card-body">
+                 <h5 class="card-title"><%=allKhatas[i].customerName%>, <%=allKhatas[i].customerFatherName%></h5>
+                 <hr>
+                 <h6>Adhar No. : <%=allKhatas[i].customerAadhar%></h6>
+                 <h6>Contact No. : <%=allKhatas[i].customerContact%></h6>
+                 <% if(allKhatas[i].totalAmount < 0) { %>
+                    <h4 style="color: red;">Balance : <%=allKhatas[i].totalAmount%></h4>
+                 <% }  %>
+                 <% if(allKhatas[i].totalAmount >= 0){ %>
+                    <h4 style="color: green;">Balance : <%=allKhatas[i].totalAmount%></h4>
+                 <% } %>
+                 <form method="post" action="/khataDetails">
+                   <button class="btn btn-sm btn-outline-secondary">SMS<i class="fa-solid fa-comment-sms mx-1"></i></button>
+                   <button class="btn btn-sm btn-outline-dark" name="khataId" value="<%=allKhatas[i]._id%>">View<i class="fa-solid fa-eye mx-1"></i></button>
+                </form>
+               </div>
+            </div>
+          </div>
+
+          <% if(i%4 === 3){ %>
+             </div>
+          <% } %>
+      <% } %>
+
+      <!-- <div class="row text-center">
+        <div class="col col-lg-4 col-md-6 col-12">
+          <div class="card">
+             <div class="card-body">
+               <h5 class="card-title">Bill Number - 01</h5>
+               <hr>
+               <h5>Customer: Harvendra Singh</h5>
+               <h5>Total Products : 6</h5>
+               <h5>Total Amount : 7000/-</h5>
+             </div>
+          </div>
+      </div>
+
+         <div class="col col-lg-4 col-md-6 col-12">
+          <div class="card">
+             <div class="card-body">
+               <h5 class="card-title">Bill Number - 02</h5>
+               <hr>
+               <h5>Customer: Harvendra Singh</h5>
+               <h5>Total Products : 6</h5>
+               <h5>Total Amount : 7000/-</h5>
+             </div>
+          </div>
+        </div>
+
+
+      <div class="col col-lg-4 col-12">
+        <div class="card">
+           <div class="card-body">
+             <h5 class="card-title">Bill Number - 03</h5>
+             <hr>
+             <h5>Customer: Harvendra Singh</h5>
+             <h5>Total Products : 6</h5>
+             <h5>Total Amount : 7000/-</h5>
+           </div>
+        </div>
+      </div>
+
+   </div> -->
+
+   </div>
+    
+
+</body>
+</html>

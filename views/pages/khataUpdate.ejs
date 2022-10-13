@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/header2'); %> 
+    <style>
+    body {
+        background-color: #b6ffae;
+    }
+    .h1{
+        text-align: center;
+    }
+    .col-sm-8{
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .form-group{
+        margin-top: 4px;
+    }
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1 solid transparent;
+        border-radius: .35rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+    }
+    #container-outer{
+        margin-top: 15%;
+    }
+    </style>
+</head>
+    
+<body>
+   
+   <div class="container" id="container-outer">
+    <div class="card mt-4">
+     <div class="card-body">
+       <div class="container">
+        <form method="post" action="/khataUpdate">
+          <div class="row">
+            <div class="form-group">
+                <label for="customer_name">Customer Aadhar Number</label>
+                <input type="number" class="form-control" required="required" name="customerAadhar">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col col-4">
+                <div class="form-group">
+                    <label for="customer_name">Credit Amount</label>
+                    <input type="number" class="form-control" required="required" name="creditAmount">
+                </div>
+            </div>
+            <div class="col col-4">
+                <div class="form-group">
+                    <label for="customer_name">Debit Amount</label>
+                    <input type="number" class="form-control" required="required" name="debitAmount">
+                </div>
+            </div>
+
+            <div class="col col-4">
+                <div class="form-group">
+                    <label for="customer_name">Transaction Date</label>
+                    <input type="Date" class="form-control" required="required" name="transactionDate">
+                </div>
+            </div>
+
+          </div>
+          <div class="row mt-4 text-center">
+             <div class="col">
+                <button class="btn btn-dark">Submit</button>
+             </div>
+          </div>
+        </form>
+       </div>
+    </div>
+    </div>
+   </div>
+</body>
+</html>

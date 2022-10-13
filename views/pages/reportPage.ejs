@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/header2'); %>
+    <style>
+      body {
+        background-color: #fff;
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid transparent;
+        border-radius: 0.25rem;
+        margin-bottom: 1.4rem;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%),
+          0 2px 6px 0 rgb(206 206 238 / 54%);
+      }
+      .me-2 {
+        margin-right: 0.5rem !important;
+      }
+
+      .navbar {
+        padding: 0 0 0.5rem;
+      }
+
+      .navbar-brand {
+        font-family: "Ubuntu";
+        font-size: 2.3rem;
+        font-weight: bold;
+      }
+
+      .nav-item {
+        padding: 0 18px;
+      }
+
+      .nav-link {
+        font-size: 1.2rem;
+        font-family: "Montserrat-Bold";
+      }
+
+      #title {
+        background-color: #060624;
+        color: #060101;
+        text-align: left;
+      }
+
+      #title .container-fluid {
+        padding: 3% 15% 7%;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row my-4">
+        <div class="col-lg-4 col-12">
+          <div class="card mt-4">
+            <div class="card-body">
+              <h2 style="text-align: center">Todays Sales Report</h2>
+              <h5>Todays Total Bill : <%=today.totalBill%></h5>
+              <h5>Total Todays Sales Amount : <%=today.totalAmount%> Rs.</h5>
+              <h5>Total Product Sold : <%=today.totalProducts%></h5>
+              <h5>Total Yesterdays Sale <%=today.yesterdaysSale%> Rs.</h5>
+              <h5>Growth From Previous day <%=today.growth%> %</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-12">
+          <canvas id="myChart1"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <h2 style="text-align: center" class="mt-3">
+        Last 7 Days Sales (Product Wise)
+      </h2>
+      <div class="row mt-4">
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="first"></h3>
+              <canvas id="barChart1"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="second"></h3>
+              <canvas id="barChart2"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="third"></h3>
+              <canvas id="barChart3"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="fourth"></h3>
+              <canvas id="barChart4"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="fifth"></h3>
+              <canvas id="barChart5"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="sixth"></h3>
+              <canvas id="barChart6"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-lg-6 col-md-6 col-12">
+          <div class="card">
+            <div class="card-body">
+              <h3 style="text-align: center" id="seventh"></h3>
+              <canvas id="barChart7"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <h2>Last 30 days sales chart</h2>
+      <canvas id="myChart3"></canvas>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row">
+        <h1 style="text-align: center">Overall sales</h1>
+        <canvas id="myChart2"></canvas>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <h2>This is to show comapny wise</h2>
+      <!-- <h3><%=arr2%></h3> -->
+      <% for (let i=0; i<arr2.length; ++i) { %>
+         <h3>`This is for the ${i}th day`</h3>
+        <% for (const [key, value] of arr2[i]) { %>
+          <p><%=key%> and <%=value%></p>
+        <% } %>
+      <% } %>
+      <canvas id="mychart4"></canvas>
+    </div>
+  </body>
+
+  <script>
+    let currArr = '<%-arr2[0].get("xyz")%>';
+    console.log(currArr)
+    for(let i=0; i<10; i++){
+        //for productTYpe[i]
+         let currMap = currArr[i]
+         console.log(currMap)
+    }
+    // console.log(newMap.length)
+    // console.log(typeof(newMap));
+    // for (let key of newMap) {
+    //   console.log(key);
+    // }
+
+    const todaysDate = new Date();
+    const monthLabel = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    // Chart for Displaying 1 week of sales data
+
+    const labels1 = [];
+    for (let i = 0; i < 7; ++i) {
+      let prevDayDate = new Date(todaysDate);
+      prevDayDate.setDate(prevDayDate.getDate() - i);
+
+      const day = prevDayDate.getDate();
+      const month = prevDayDate.getMonth();
+      const year = prevDayDate.getFullYear();
+      const dateString = day + " " + monthLabel[month] + " " + year;
+
+      labels1.push(dateString);
+    }
+
+    const data1 = {
+      labels: labels1,
+      datasets: [
+        {
+          label: "Total Sale of Day",
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+          ],
+          borderColor: "rgb(255, 99, 132)",
+          data: [
+            "<%-weeklySales.get(0)%>",
+            "<%-weeklySales.get(1)%>",
+            "<%-weeklySales.get(2)%>",
+            "<%-weeklySales.get(3)%>",
+            "<%-weeklySales.get(4)%>",
+            "<%-weeklySales.get(5)%>",
+            "<%-weeklySales.get(6)%>",
+          ],
+        },
+      ],
+    };
+
+    const config1 = {
+      type: "bar",
+      data: data1,
+      options: {},
+    };
+    const myChart = new Chart(document.getElementById("myChart1"), config1);
+
+    // Creating chart2(Donut) for productType and their sales
+
+    const productTypes = [
+      "seeds",
+      "rodenticides",
+      "biopesticides",
+      "insecticides",
+      "weedicides",
+      "syntheticfertilizer",
+      "growthregulators",
+      "fungicides",
+      "biofertilizers",
+      "herbicides",
+    ];
+
+    let labels2 = productTypes;
+    let data2 = [];
+
+    data2.push('<%-productSales.get("seeds")%>');
+    data2.push('<%-productSales.get("rodenticides")%>');
+    data2.push('<%-productSales.get("biopesticides")%>');
+    data2.push('<%-productSales.get("insecticides")%>');
+    data2.push('<%-productSales.get("weedicides")%>');
+    data2.push('<%-productSales.get("syntheticfertilizer")%>');
+    data2.push('<%-productSales.get("growthregulators")%>');
+    data2.push('<%-productSales.get("fungicides")%>');
+    data2.push('<%-productSales.get("biofertilizers")%>');
+    data2.push('<%-productSales.get("herbicides")%>');
+
+    const dataDonut = {
+      labels: labels2,
+      datasets: [
+        {
+          label: "Total Sales",
+          data: data2,
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(255, 99, 132)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    };
+
+    const config2 = {
+      type: "pie",
+      data: dataDonut,
+    };
+    const myChart2 = new Chart(document.getElementById("myChart2"), config2);
+
+    // to create chart for monthly sales (30 days)
+    const createMonthlyReport = () => {
+      //get the monthly data from server and then render it in bar chart for
+      let labels3 = [];
+      const monthlyData = [];
+
+      for (let i = 0; i < 30; ++i) {
+        let prevDayDate = new Date(todaysDate);
+        prevDayDate.setDate(prevDayDate.getDate() - i);
+
+        const day = prevDayDate.getDate();
+        const month = prevDayDate.getMonth();
+        const year = prevDayDate.getFullYear();
+        const dateString = day + " " + monthLabel[month] + " " + year;
+
+        labels3.push(dateString);
+      }
+      monthlyData.push("<%-monthlySales.get(0)%>");
+      monthlyData.push("<%-monthlySales.get(1)%>");
+      monthlyData.push("<%-monthlySales.get(2)%>");
+      monthlyData.push("<%-monthlySales.get(3)%>");
+      monthlyData.push("<%-monthlySales.get(4)%>");
+      monthlyData.push("<%-monthlySales.get(5)%>");
+      monthlyData.push("<%-monthlySales.get(6)%>");
+      monthlyData.push("<%-monthlySales.get(7)%>");
+      monthlyData.push("<%-monthlySales.get(8)%>");
+      monthlyData.push("<%-monthlySales.get(9)%>");
+      monthlyData.push("<%-monthlySales.get(10)%>");
+      monthlyData.push("<%-monthlySales.get(11)%>");
+      monthlyData.push("<%-monthlySales.get(12)%>");
+      monthlyData.push("<%-monthlySales.get(13)%>");
+      monthlyData.push("<%-monthlySales.get(14)%>");
+      monthlyData.push("<%-monthlySales.get(15)%>");
+      monthlyData.push("<%-monthlySales.get(16)%>");
+      monthlyData.push("<%-monthlySales.get(17)%>");
+      monthlyData.push("<%-monthlySales.get(18)%>");
+      monthlyData.push("<%-monthlySales.get(19)%>");
+      monthlyData.push("<%-monthlySales.get(20)%>");
+      monthlyData.push("<%-monthlySales.get(21)%>");
+      monthlyData.push("<%-monthlySales.get(22)%>");
+      monthlyData.push("<%-monthlySales.get(23)%>");
+      monthlyData.push("<%-monthlySales.get(24)%>");
+      monthlyData.push("<%-monthlySales.get(25)%>");
+      monthlyData.push("<%-monthlySales.get(26)%>");
+      monthlyData.push("<%-monthlySales.get(27)%>");
+      monthlyData.push("<%-monthlySales.get(28)%>");
+      monthlyData.push("<%-monthlySales.get(29)%>");
+
+      const data3 = {
+        labels: labels3,
+        datasets: [
+          {
+            label: "Total Sale of Day",
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            borderColor: "rgb(255, 99, 132)",
+            data: monthlyData,
+          },
+        ],
+      };
+
+      const config3 = {
+        type: "bar",
+        data: data3,
+        options: {},
+      };
+      const myChart = new Chart(document.getElementById("myChart3"), config3);
+    };
+
+    // 7 Bar Chart for Last & days sales but product wise distribution
+
+    //1st BarChart (For current day)
+    function createFirstBarChart() {
+      const pieChartData1 = [];
+      pieChartData1.push('<%-arr[0].get("seeds")%>');
+      pieChartData1.push('<%-arr[0].get("rodenticides")%>');
+      pieChartData1.push('<%-arr[0].get("biopesticides")%>');
+      pieChartData1.push('<%-arr[0].get("insecticides")%>');
+      pieChartData1.push('<%-arr[0].get("weedicides")%>');
+      pieChartData1.push('<%-arr[0].get("syntheticfertilizer")%>');
+      pieChartData1.push('<%-arr[0].get("growthregulators")%>');
+      pieChartData1.push('<%-arr[0].get("fungicides")%>');
+      pieChartData1.push('<%-arr[0].get("biofertilizers")%>');
+      pieChartData1.push('<%-arr[0].get("herbicides")%>');
+
+      const dataPieChart1 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData1,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig1 = {
+        type: "bar",
+        data: dataPieChart1,
+      };
+      const pieChart1 = new Chart(
+        document.getElementById("barChart1"),
+        pieChartConfig1
+      );
+    }
+
+    //2nd BarChart (For Previous Day)
+
+    function createSecondBarChart() {
+      const pieChartData2 = [];
+      pieChartData2.push('<%-arr[1].get("seeds")%>');
+      pieChartData2.push('<%-arr[1].get("rodenticides")%>');
+      pieChartData2.push('<%-arr[1].get("biopesticides")%>');
+      pieChartData2.push('<%-arr[1].get("insecticides")%>');
+      pieChartData2.push('<%-arr[1].get("weedicides")%>');
+      pieChartData2.push('<%-arr[1].get("syntheticfertilizer")%>');
+      pieChartData2.push('<%-arr[1].get("growthregulators")%>');
+      pieChartData2.push('<%-arr[1].get("fungicides")%>');
+      pieChartData2.push('<%-arr[1].get("biofertilizers")%>');
+      pieChartData2.push('<%-arr[1].get("herbicides")%>');
+
+      const dataPieChart2 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData2,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig2 = {
+        type: "bar",
+        data: dataPieChart2,
+      };
+      const pieChart2 = new Chart(
+        document.getElementById("barChart2"),
+        pieChartConfig2
+      );
+    }
+
+    //3rd BarChart
+
+    function createThirdBarChart() {
+      const pieChartData3 = [];
+      pieChartData3.push('<%-arr[2].get("seeds")%>');
+      pieChartData3.push('<%-arr[2].get("rodenticides")%>');
+      pieChartData3.push('<%-arr[2].get("biopesticides")%>');
+      pieChartData3.push('<%-arr[2].get("insecticides")%>');
+      pieChartData3.push('<%-arr[2].get("weedicides")%>');
+      pieChartData3.push('<%-arr[2].get("syntheticfertilizer")%>');
+      pieChartData3.push('<%-arr[2].get("growthregulators")%>');
+      pieChartData3.push('<%-arr[2].get("fungicides")%>');
+      pieChartData3.push('<%-arr[2].get("biofertilizers")%>');
+      pieChartData3.push('<%-arr[2].get("herbicides")%>');
+
+      const dataPieChart3 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData3,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig3 = {
+        type: "bar",
+        data: dataPieChart3,
+      };
+      const pieChart3 = new Chart(
+        document.getElementById("barChart3"),
+        pieChartConfig3
+      );
+    }
+
+    //4th PieChart
+
+    function createFourthBarChart() {
+      const pieChartData4 = [];
+      pieChartData4.push('<%-arr[3].get("seeds")%>');
+      pieChartData4.push('<%-arr[3].get("rodenticides")%>');
+      pieChartData4.push('<%-arr[3].get("biopesticides")%>');
+      pieChartData4.push('<%-arr[3].get("insecticides")%>');
+      pieChartData4.push('<%-arr[3].get("weedicides")%>');
+      pieChartData4.push('<%-arr[3].get("syntheticfertilizer")%>');
+      pieChartData4.push('<%-arr[3].get("growthregulators")%>');
+      pieChartData4.push('<%-arr[3].get("fungicides")%>');
+      pieChartData4.push('<%-arr[3].get("biofertilizers")%>');
+      pieChartData4.push('<%-arr[3].get("herbicides")%>');
+
+      const dataPieChart4 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData4,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig4 = {
+        type: "bar",
+        data: dataPieChart4,
+      };
+      const pieChart3 = new Chart(
+        document.getElementById("barChart4"),
+        pieChartConfig4
+      );
+    }
+
+    //5th PieChart
+
+    function createFifthBarChart() {
+      const pieChartData5 = [];
+      pieChartData5.push('<%-arr[4].get("seeds")%>');
+      pieChartData5.push('<%-arr[4].get("rodenticides")%>');
+      pieChartData5.push('<%-arr[4].get("biopesticides")%>');
+      pieChartData5.push('<%-arr[4].get("insecticides")%>');
+      pieChartData5.push('<%-arr[4].get("weedicides")%>');
+      pieChartData5.push('<%-arr[4].get("syntheticfertilizer")%>');
+      pieChartData5.push('<%-arr[4].get("growthregulators")%>');
+      pieChartData5.push('<%-arr[4].get("fungicides")%>');
+      pieChartData5.push('<%-arr[4].get("biofertilizers")%>');
+      pieChartData5.push('<%-arr[4].get("herbicides")%>');
+
+      const dataPieChart5 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData5,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig5 = {
+        type: "bar",
+        data: dataPieChart5,
+      };
+      const pieChart5 = new Chart(
+        document.getElementById("barChart5"),
+        pieChartConfig5
+      );
+    }
+
+    //6th PieChart
+
+    function createSixthBarChart() {
+      const pieChartData6 = [];
+      pieChartData6.push('<%-arr[5].get("seeds")%>');
+      pieChartData6.push('<%-arr[5].get("rodenticides")%>');
+      pieChartData6.push('<%-arr[5].get("biopesticides")%>');
+      pieChartData6.push('<%-arr[5].get("insecticides")%>');
+      pieChartData6.push('<%-arr[5].get("weedicides")%>');
+      pieChartData6.push('<%-arr[5].get("syntheticfertilizer")%>');
+      pieChartData6.push('<%-arr[5].get("growthregulators")%>');
+      pieChartData6.push('<%-arr[5].get("fungicides")%>');
+      pieChartData6.push('<%-arr[5].get("biofertilizers")%>');
+      pieChartData6.push('<%-arr[5].get("herbicides")%>');
+
+      const dataPieChart6 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData6,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig6 = {
+        type: "bar",
+        data: dataPieChart6,
+      };
+      const pieChart6 = new Chart(
+        document.getElementById("barChart6"),
+        pieChartConfig6
+      );
+    }
+
+    //7th PieChart
+    function createSeventhBarChart() {
+      const pieChartData7 = [];
+      pieChartData7.push('<%-arr[6].get("seeds")%>');
+      pieChartData7.push('<%-arr[6].get("rodenticides")%>');
+      pieChartData7.push('<%-arr[6].get("biopesticides")%>');
+      pieChartData7.push('<%-arr[6].get("insecticides")%>');
+      pieChartData7.push('<%-arr[6].get("weedicides")%>');
+      pieChartData7.push('<%-arr[6].get("syntheticfertilizer")%>');
+      pieChartData7.push('<%-arr[6].get("growthregulators")%>');
+      pieChartData7.push('<%-arr[6].get("fungicides")%>');
+      pieChartData7.push('<%-arr[6].get("biofertilizers")%>');
+      pieChartData7.push('<%-arr[6].get("herbicides")%>');
+
+      const dataPieChart7 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData7,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig7 = {
+        type: "bar",
+        data: dataPieChart7,
+      };
+      const pieChart6 = new Chart(
+        document.getElementById("barChart7"),
+        pieChartConfig7
+      );
+    }
+
+    //setting dates in charts
+    function setDateFunction() {
+      const sequenceArray = [
+        "first",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+      ];
+      for (let i = 0; i < 7; ++i) {
+        let prevDayDate = new Date(todaysDate);
+        prevDayDate.setDate(prevDayDate.getDate() - i);
+
+        const day = prevDayDate.getDate();
+        const month = prevDayDate.getMonth();
+        const year = prevDayDate.getFullYear();
+        const dateString = day + " " + monthLabel[month] + " " + year;
+
+        var x = document.getElementById(sequenceArray[i]);
+        x.innerText = dateString;
+      }
+    }
+
+
+    function createMyChart4(){
+      const pieChartData = [];
+      pieChartData.push('<%-arr[6].get("seeds")%>');
+      pieChartData.push('<%-arr[6].get("rodenticides")%>');
+      pieChartData.push('<%-arr[6].get("biopesticides")%>');
+      pieChartData.push('<%-arr[6].get("insecticides")%>');
+      pieChartData.push('<%-arr[6].get("weedicides")%>');
+      pieChartData.push('<%-arr[6].get("syntheticfertilizer")%>');
+      pieChartData.push('<%-arr[6].get("growthregulators")%>');
+      pieChartData.push('<%-arr[6].get("fungicides")%>');
+      pieChartData.push('<%-arr[6].get("biofertilizers")%>');
+      pieChartData.push('<%-arr[6].get("herbicides")%>');
+
+      const dataPieChart7 = {
+        labels: labels2,
+        datasets: [
+          {
+            label: "Total Sales",
+            data: pieChartData,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+              "rgb(255, 99, 132)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+      const pieChartConfig7 = {
+        type: "bar",
+        data: dataPieChart7,
+      };
+      const pieChart6 = new Chart(
+        document.getElementById("barChart7"),
+        pieChartConfig7
+      );
+    }
+    //Calling functions to create bar chart for last week
+    
+    createFirstBarChart();
+    createSecondBarChart();
+    createThirdBarChart();
+    createFourthBarChart();
+    createFifthBarChart();
+    createSixthBarChart();
+    createSeventhBarChart();
+    setDateFunction();
+    createMonthlyReport();
+    createMyChart4();
+  </script>
+</html>
