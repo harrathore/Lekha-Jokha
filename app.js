@@ -324,8 +324,6 @@ app.get("/todaysData", async function(req, res){
 
 
 app.post("/register", async function(req, res){
-    // console.log("Body of reques is : ")
-    // console.log(req.body);
 
     const email = req.body.email;
     const emailConfirm = req.body.confirm_email;
@@ -365,9 +363,7 @@ app.post("/register", async function(req, res){
                 khataBook : [],
             });
             const usersaved = await user.save();
-            // console.log(usersaved);
-
-            //Generate jwt here and send it to browser and save in a cookie
+        
             const token = await generateToken(username);
             
             return  res.cookie("access_token", token, {
@@ -534,7 +530,7 @@ app.post("/khataUpdate", async function(req, res){
 
             try{
                 const foundCustomer = await User.findOne({usernaame : userEmail, "khataBook.customerAadhar" : customerAadhar});
-               // console.log(foundCustomer);
+               
                 if(foundCustomer){
                     try{
                         const newTrans = ({
