@@ -6,8 +6,6 @@ const cookieParser = require('cookie-parser')
 const path = require('path');
 const Chart = require('chart.js');
 
-// const req = require('express/lib/request');
-// const res = require('express/lib/response');
 
 require('dotenv').config();
 
