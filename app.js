@@ -562,5 +562,3 @@ app.post("/khataDetails", function(req, res){
 app.listen(port, function(){
     console.log("Server is listening at" + port);
 });
-
-//This is added in modification_app.js branch to test
