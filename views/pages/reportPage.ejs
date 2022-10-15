@@ -165,33 +165,10 @@
       </div>
     </div>
 
-    <div class="container mt-4">
-      <h2>This is to show comapny wise</h2>
-      <!-- <h3><%=arr2%></h3> -->
-      <% for (let i=0; i<arr2.length; ++i) { %>
-         <h3>`This is for the ${i}th day`</h3>
-        <% for (const [key, value] of arr2[i]) { %>
-          <p><%=key%> and <%=value%></p>
-        <% } %>
-      <% } %>
-      <canvas id="mychart4"></canvas>
-    </div>
   </body>
 
   <script>
-    let currArr = '<%-arr2[0].get("xyz")%>';
-    console.log(currArr)
-    for(let i=0; i<10; i++){
-        //for productTYpe[i]
-         let currMap = currArr[i]
-         console.log(currMap)
-    }
-    // console.log(newMap.length)
-    // console.log(typeof(newMap));
-    // for (let key of newMap) {
-    //   console.log(key);
-    // }
-
+   
     const todaysDate = new Date();
     const monthLabel = [
       "January",
