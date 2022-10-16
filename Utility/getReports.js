@@ -30,8 +30,11 @@ async function getTodaysReport(data){
         }
         
     }
-
-    let percentOfGrowth = ((totalTodaysAmount/100)*100) - 100;
+    let percentOfGrowth = 0;
+    if(totalTodaysAmount != 0){
+        percentOfGrowth = ((totalTodaysAmount/totalYesterdaysAmount)*100)-100;
+    }
+    percentOfGrowth = percentOfGrowth.toFixed(2);
     return {
         "totalBill" : totalTodaysBill,
         "totalAmount" : totalTodaysAmount,
@@ -121,7 +124,7 @@ async function getAllProductDayWise(data){        //Getting data of last 7 days
 
             let isDateSame = await isDateSameFunction(invoiceDate, prevDayDate);
             if(isDateSame){
-                //console.log(prevDayDate + "  " + invoiceDate + "  " + data[j].allProducts[0].subTotal)
+               
                 dataArr[i].push(data[j].allProducts);
             }
         }

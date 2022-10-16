@@ -259,7 +259,7 @@ app.get('/report', async function(req, res){
             }
            
 
-            res.render('pages/reportPage', {today : todaysData, weeklySales : weeklySalesData, monthlySales : monthlySalesData, productSales : productTypeSalesData, arr : arr, arr2 : resArray});
+            res.render('pages/reportPage', {today : todaysData, weeklySales : weeklySalesData, monthlySales : monthlySalesData, productSales : productTypeSalesData, arr : arr});
 
         }catch(error){
             return res.status(400).json({message : error.message});
@@ -311,7 +311,6 @@ app.get("/todaysData", async function(req, res){
                 arr.push((userFound.khataBook[0]).transactions[i]);
             }
         }
-        console.log(arr)
         res.send("The length of data is : " + arr);
     }else{
         return res.status(403).json({message : "You are not authorize... Please login first"});
