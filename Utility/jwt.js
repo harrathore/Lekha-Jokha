@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 async function generateToken(userEmail){
 
+    //let jwtSecretKey = "This is Secret Key";
     let jwtSecretKey = process.env.JWT_SECRET_KEY;
     let data = {
         email : userEmail

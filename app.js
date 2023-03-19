@@ -29,7 +29,7 @@ app.set('view engine', 'ejs');
 
 //Connecting to Databse
 
-mongoose.connect('mongodb://localhost:27017/LekhaJokhaDb');
+mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb');
 
 const database = mongoose.connection
 database.on('error', (error) => {
@@ -393,7 +393,7 @@ app.post('/login', async function(req, res){
 
         }
     }catch(error){
-        return res.status(400).json({message : error.message});
+        return res.status(400).json({message2 : error.message});
     }
 })
 
