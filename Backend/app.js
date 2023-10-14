@@ -10,6 +10,7 @@ const Chart = require('chart.js');
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
+const mongoDbUrl = process.env.MONGODB_URL;
 
 
 const app = express();
@@ -31,7 +32,7 @@ app.set('view engine', 'ejs');
 
 mongoose.set('strictQuery', false); // Prepare for the change in Mongoose 7
 
-mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb', {
+mongoose.connect(mongoDbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -46,7 +47,7 @@ database.once('open', () => {
   console.log('Database Connected');
 });
 
-// mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb');
+// mongoose.connect(mongoDbUrl);
 
 // const database = mongoose.connection
 // database.on('error', (error) => {
