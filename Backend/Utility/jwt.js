@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 async function generateToken(userEmail){
-
-    //let jwtSecretKey = "This is Secret Key";
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
+    let jwtSecretKey = "This is Secret Key";
+    //let jwtSecretKey = process.env.JWT_SECRET_KEY || "Harvendra";
     let data = {
         email : userEmail
     }
@@ -12,7 +11,8 @@ async function generateToken(userEmail){
 }
 
 async function verifyJwt(jwtToken){
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
+    let jwtSecretKey = "This is Secret Key";
+    //let jwtSecretKey = process.env.JWT_SECRET_KEY;
     const Verified = jwt.verify(jwtToken, jwtSecretKey);
     return Verified;
 }

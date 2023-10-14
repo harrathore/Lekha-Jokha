@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../Frontend/views'));
 app.set('view engine', 'ejs');
 
 
@@ -29,16 +29,33 @@ app.set('view engine', 'ejs');
 
 //Connecting to Databse
 
-mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb');
+mongoose.set('strictQuery', false); // Prepare for the change in Mongoose 7
 
-const database = mongoose.connection
+mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const database = mongoose.connection;
+
 database.on('error', (error) => {
-  console.log(error)
-})
+  console.error('MongoDB connection error:', error);
+});
 
-database.once('connected', () => {
+database.once('open', () => {
   console.log('Database Connected');
-})
+});
+
+// mongoose.connect('mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb');
+
+// const database = mongoose.connection
+// database.on('error', (error) => {
+//   console.log(error)
+// })
+
+// database.once('connected', () => {
+//   console.log('Database Connected');
+// })
 
 
 
