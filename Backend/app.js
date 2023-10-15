@@ -10,7 +10,7 @@ const Chart = require('chart.js');
 require('dotenv').config();
 
 const port = process.env.PORT || 3000;
-const mongoDbUrl = process.env.MONGODB_URL;
+const mongoDbUrl = process.env.MONGODB_URL || "mongodb+srv://harvendra:harvendra123@lekhajokhacluster.ub9wcty.mongodb.net/LekhaJokhaDb";
 
 
 const app = express();
